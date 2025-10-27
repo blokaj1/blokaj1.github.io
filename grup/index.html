@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WhatsApp Grup Aç</title>
+</head>
+<body style="font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; text-align:center; padding-top:40px;">
+<p>Gruba yönlendiriliyorsun…</p>
+<script>
+  const code = "H8CDN4jOsVU5jXUqnWY2Nt";
+  const appUri = "whatsapp://chat?code=" + code;
+  const webFallback = "https://chat.whatsapp.com/" + code;
+
+  const t0 = Date.now();
+  location.href = appUri;
+
+  setTimeout(() => {
+    if (Date.now() - t0 < 2000) {
+      window.location.href = webFallback;
+    }
+  }, 1000);
+</script>
+</body>
+</html>
