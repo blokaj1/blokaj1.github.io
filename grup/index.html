@@ -1,25 +1,41 @@
 <!doctype html>
-<html>
+<html lang="tr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WhatsApp Grup Aç</title>
-</head>
-<body style="font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; text-align:center; padding-top:40px;">
-<p>Gruba yönlendiriliyorsun…</p>
+<title>Gruba Katıl</title>
 <script>
-  const code = "H8CDN4jOsVU5jXUqnWY2Nt";
-  const appUri = "whatsapp://chat?code=" + code;
-  const webFallback = "https://chat.whatsapp.com/" + code;
+  const CODE = "H8CDN4jOsVU5jXUqnWY2Nt";
 
-  const t0 = Date.now();
-  location.href = appUri;
+  const APP = "whatsapp://chat?code=" + CODE;
+  const WEB = "https://chat.whatsapp.com/" + CODE + "?app_absent=0";
+  const INTENT = "intent://chat.whatsapp.com/" + CODE + "#Intent;scheme=https;package=com.whatsapp;end";
 
-  setTimeout(() => {
-    if (Date.now() - t0 < 2000) {
-      window.location.href = webFallback;
+  function openLink(){
+    const ua = navigator.userAgent.toLowerCase();
+    const isIG = ua.includes("instagram");
+    const isAndroid = ua.includes("android");
+    const start = Date.now();
+
+    if(isIG && isAndroid){
+      // Instagram Android → önce intent
+      location.href = INTENT;
+      setTimeout(()=>location.href = WEB, 1200);
+    } else {
+      // Normal akış → önce app dene, olmazsa web
+      location.href = APP;
+      setTimeout(()=> {
+        if(Date.now() - start < 1500){
+          location.href = WEB;
+        }
+      }, 1000);
     }
-  }, 1000);
+  }
+
+  window.onload = openLink;
 </script>
+</head>
+<body style="background:#111;color:#fff;display:flex;align-items:center;justify-content:center;height:100vh;font-family:system-ui">
+<div>Gruba yönlendiriliyor...</div>
 </body>
 </html>
